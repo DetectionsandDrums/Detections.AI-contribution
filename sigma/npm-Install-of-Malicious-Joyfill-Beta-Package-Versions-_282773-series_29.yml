@@ -1,0 +1,33 @@
+title: npm Install of Malicious Joyfill Beta Package Versions
+id: ea112810-cab7-4681-b2a8-2339f6f82398
+author: detections.ai
+date: '2026-07-30'
+modified: '2026-07-30'
+tags:
+  - attack.t1195.002
+  - attack.t1059.007
+logsource:
+  category: process_creation
+detection:
+  selection_npm:
+    Image|endswith:
+      - '\npm.cmd'
+      - '\npm.exe'
+      - '/npm'
+  selection_pkg:
+    CommandLine|contains:
+      - '@joyfill/components'
+      - '@joyfill/layouts'
+  selection_version:
+    CommandLine|contains:
+      - '0.1.2-2773.beta.0'
+      - '0.1.2-2773.beta.1'
+      - '0.1.2-2773.beta.2'
+  condition: selection_npm and selection_pkg and selection_version
+falsepositives:
+  - None known - these are attacker-published malicious beta versions
+level: critical
+fields:
+  - CommandLine
+  - Image
+  - ParentImage

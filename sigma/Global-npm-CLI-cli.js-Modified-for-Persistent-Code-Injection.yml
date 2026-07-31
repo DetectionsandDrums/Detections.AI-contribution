@@ -1,0 +1,22 @@
+title: Global npm CLI cli.js Modified for Persistent Code Injection
+id: 854391f5-0f8c-4af0-a052-9360036161d8
+author: detections.ai
+date: '2026-07-30'
+modified: '2026-07-30'
+tags:
+  - attack.persistence
+  - attack.t1554
+logsource:
+  category: file_event
+detection:
+  selection:
+    TargetFilename|contains:
+      - 'npm/lib/cli.js'
+      - 'npm\lib\cli.js'
+  condition: selection
+falsepositives:
+  - Legitimate npm version upgrade or reinstall overwriting cli.js
+level: high
+description: Detects unauthorized modifications to the core npm CLI entry point file
+  (cli.js). Adversaries may modify this file to inject malicious code, achieving
+  persistence or executing unauthorized commands whenever the npm tool is invoked.
